@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-from model import sales_repattern_optimize
+from repattern_model import sales_repattern_optimize
+from max_sales_model import max_feasible_sales
 
 st.set_page_config(layout="wide")
 
@@ -75,8 +76,14 @@ selling_days = operational_df.loc["Selling Days"].tolist()
 def display_results(result, original_sales, sales_target):
     # Summary
     summary_df = pd.DataFrame(
-        {"Total Sales": [sum(original_sales), sales_target,  sum(result["final_sales"]), result["target_deviation"]]},
-        index=["Original", "Target",  "Final Repattern", "Gap to Target"]
+        {"Total Sales": 
+         [max_sales['max_total_sales'], 
+          sum(original_sales), 
+          sales_target,  
+          sum(result["final_sales"]), 
+          result["target_deviation"]]
+          },
+        index=["Max Sales Push", "Original", "Target",  "Final Repattern", "Gap to Target"]
     )
     st.write("### 📊 Summary")
     st.dataframe(summary_df.style.format("{:,.0f}"), use_container_width=False)
@@ -116,6 +123,16 @@ def display_results(result, original_sales, sales_target):
 
 # --- Run Optimization ---
 if st.button("Run Optimization"):
+    max_sales = max_feasible_sales(
+        original_sales = original_sales,
+        min_dos_targets = min_dos_targets,
+        max_dos_targets = max_dos_targets,
+        wholesales = wholesales,
+        dealer_stock = dealer_stock,
+        frozen_months = frozen_months,
+        selling_days = selling_days
+    )
+
     result = sales_repattern_optimize(
         original_sales=original_sales,
         sales_target=sales_target,
