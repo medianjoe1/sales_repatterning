@@ -25,7 +25,7 @@ def init_sales_inventory_df():
 def init_constraints_df():
     return pd.DataFrame(
         {m: [15, 60] for m in months},
-        index=["Min DoS", "Max DoS"]
+        index=["Min DS", "Max DS"]
     )
 
 def init_operational_df():
@@ -110,9 +110,9 @@ def display_results(result, original_sales, sales_target):
             "Final Sales",
             "Δ Sales (Original - Final)",
             "Final Dealer Stock",
-            "Max DoS Target",
+            "Max DS Target",
             "Final Days of Supply",
-            "Min DoS Target",
+            "Min DS Target",
         ],
         columns=months
     )
