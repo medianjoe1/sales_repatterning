@@ -66,8 +66,8 @@ original_sales = sales_inventory_df.loc["Original Sales"].tolist()
 wholesales = sales_inventory_df.loc["Wholesales"].tolist()
 dealer_stock = sales_inventory_df.loc["Dealer Stock"].tolist()
 
-min_dos_targets = constraints_df.loc["Min DoS"].tolist()
-max_dos_targets = constraints_df.loc["Max DoS"].tolist()
+min_dos_targets = constraints_df.loc["Min DS"].tolist()
+max_dos_targets = constraints_df.loc["Max DS"].tolist()
 
 frozen_months = [int(x) for x in operational_df.loc["Frozen Months (1=Frozen, 0=Avail to Repattern)"].tolist()]
 selling_days = operational_df.loc["Selling Days"].tolist()
